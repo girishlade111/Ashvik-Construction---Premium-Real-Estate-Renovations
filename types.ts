@@ -17,6 +17,7 @@ export interface Property {
   bhk: number;
   furnishing: FurnishingStatus;
   price: number;
+  priceHistory?: { date: string; price: number }[];
   area: number; // in sqft
   images: string[];
   amenities: { [key in Language]: string[] };

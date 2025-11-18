@@ -12,6 +12,11 @@ export const properties: Property[] = [
     bhk: 3,
     furnishing: 'Furnished',
     price: 50000000,
+    priceHistory: [
+      { date: '2023-01-15', price: 48000000 },
+      { date: '2023-08-20', price: 49500000 },
+      { date: '2024-03-10', price: 50000000 },
+    ],
     area: 1800,
     images: ['https://picsum.photos/seed/sea-view-apt-1/800/600', 'https://picsum.photos/seed/sea-view-apt-2/800/600', 'https://picsum.photos/seed/sea-view-apt-3/800/600'],
     amenities: { 
@@ -34,6 +39,11 @@ export const properties: Property[] = [
     bhk: 5,
     furnishing: 'Semi-Furnished',
     price: 120000000,
+    priceHistory: [
+        { date: '2022-11-01', price: 115000000 },
+        { date: '2023-06-15', price: 118000000 },
+        { date: '2024-02-28', price: 120000000 },
+    ],
     area: 4500,
     images: ['https://picsum.photos/seed/family-villa-1/800/600', 'https://picsum.photos/seed/family-villa-2/800/600', 'https://picsum.photos/seed/family-villa-3/800/600'],
     amenities: {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { type Property, type Language } from '../types';
-import { BedIcon, BathIcon, AreaIcon, ChevronLeftIcon, ChevronRightIcon, HeartIcon } from './IconComponents';
+import { BedIcon, BathIcon, AreaIcon, ChevronLeftIcon, ChevronRightIcon, HeartIcon, ChevronDownIcon } from './IconComponents';
+import PriceHistoryChart from './PriceHistoryChart';
 
 interface PropertyCardProps {
   property: Property;
@@ -12,6 +13,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, language }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
 
   // The minimum distance (in pixels) to register a swipe
   const minSwipeDistance = 50;
@@ -98,31 +100,21 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, language }) => {
 
   const formatPrice = (price: number) => {
     const isRent = property.listingType === 'Rent';
-    let priceString = '';
 
     if (isRent) {
-        priceString = `₹ ${price.toLocaleString('en-IN')}`;
-        priceString += language === 'mr' ? '/महिना' : '/month';
-    } else {
-        if (language === 'mr') {
-            if (price >= 10000000) {
-                priceString = `₹ ${(price / 10000000).toFixed(2)} कोटी`;
-            } else if (price >= 100000) {
-                priceString = `₹ ${(price / 100000).toFixed(2)} लाख`;
-            } else {
-                priceString = `₹ ${price.toLocaleString('en-IN')}`;
-            }
-        } else { // English
-            if (price >= 10000000) {
-                priceString = `₹ ${(price / 10000000).toFixed(2)} Cr`;
-            } else if (price >= 100000) {
-                priceString = `₹ ${(price / 100000).toFixed(2)} Lac`;
-            } else {
-                priceString = `₹ ${price.toLocaleString('en-IN')}`;
-            }
-        }
+      return `₹ ${price.toLocaleString('en-IN')}${language === 'mr' ? '/महिना' : '/month'}`;
     }
-    return priceString;
+
+    const crore = 10000000;
+    const lakh = 100000;
+
+    if (price >= crore) {
+      return `₹ ${(price / crore).toFixed(2)} ${language === 'mr' ? 'कोटी' : 'Cr'}`;
+    }
+    if (price >= lakh) {
+      return `₹ ${(price / lakh).toFixed(2)} ${language === 'mr' ? 'लाख' : 'Lac'}`;
+    }
+    return `₹ ${price.toLocaleString('en-IN')}`;
   };
 
   return (
@@ -207,7 +199,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, language }) => {
             <span className="text-sm">{property.area} {language === 'en' ? 'sqft' : 'चौ. फूट'}</span>
           </div>
         </div>
-        <div className="mt-3">
+        <div className="mt-4 flex items-center justify-between">
           <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
             property.furnishing === 'Furnished' ? 'bg-green-800 text-green-200' :
             property.furnishing === 'Semi-Furnished' ? 'bg-yellow-800 text-yellow-200' :
@@ -218,6 +210,23 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, language }) => {
                 (property.furnishing === 'Semi-Furnished' ? 'अर्ध-सुसज्ज' : 'सुसज्ज नाही'))
             }
           </span>
+           {property.listingType === 'Buy' && property.priceHistory && property.priceHistory.length > 1 && (
+             <button
+                onClick={() => setShowHistory(!showHistory)}
+                className="flex items-center text-xs text-gray-400 hover:text-white transition-colors"
+                aria-expanded={showHistory}
+             >
+                {language === 'en' ? 'Price History' : 'किंमत इतिहास'}
+                <ChevronDownIcon className={`w-4 h-4 ml-1 transition-transform duration-300 ${showHistory ? 'rotate-180' : ''}`} />
+             </button>
+          )}
+        </div>
+        <div className={`transition-all duration-500 ease-in-out overflow-hidden ${showHistory ? 'max-h-60 mt-4' : 'max-h-0'}`}>
+          {property.listingType === 'Buy' && property.priceHistory && (
+              <div className="bg-[#1A1A1A] rounded-lg p-2">
+                 <PriceHistoryChart data={property.priceHistory} language={language} />
+              </div>
+          )}
         </div>
       </div>
     </div>
