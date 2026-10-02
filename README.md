@@ -1,20 +1,66 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Ashvik Construction — Premium Real Estate & Renovations
 
-# Run and deploy your AI Studio app
+A premium, minimal, and fast marketing website for **Ashvik Construction** — specialists in
+government-officer bungalow renovations and premium real estate sales/rentals across Mumbai.
 
-This contains everything you need to run your app locally.
+🌐 **Live site:** https://ashvik-construction-mumbai.netlify.app
 
-View your app in AI Studio: https://ai.studio/apps/drive/1D7PHDxgpSuEioMvX87Oa-zJDrKjVeq35
+## Features
 
-## Run Locally
+- **Home page** — hero section with premium dark/gold branding, featured properties, testimonials
+- **Properties** — searchable listing of flats, apartments, and villas for sale and rent
+- **Property cards** — image carousel (swipe on touch devices, arrows + pagination dots on desktop)
+- **Price history chart** — animated SVG line chart showing historical price trends for properties listed for sale
+- **Services** — renovation and construction service offerings
+- **Portfolio** — completed projects showcase
+- **About & Contact** — company info, enquiry/contact form, sticky contact widget
+- **Admin dashboard** — internal dashboard view for managing listings
+- **Multi-language UI** — English / regional language toggle
 
-**Prerequisites:**  Node.js
+## Tech Stack
 
+- React 19 + TypeScript
+- Vite 6 (build tooling)
+- Tailwind CSS (via CDN) + Google Fonts (Inter, Playfair Display)
+- Zero-backend: fully client-side, sample data in `constants.ts`
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Quick Start
+
+**Prerequisites:** Node.js 18+
+
+```bash
+npm install
+npm run dev      # start dev server (default http://localhost:3000)
+npm run build    # production build -> dist/
+```
+
+No environment variables are required — the app ships with built-in sample data.
+
+## Project Structure
+
+```
+├── index.html            # HTML shell + SEO meta tags
+├── index.tsx             # React entry point
+├── App.tsx               # App shell: navigation state, language toggle
+├── types.ts              # Shared TypeScript types (Property, Project, Page, Language)
+├── constants.ts          # Sample properties, projects, testimonials, price history
+├── components/           # Reusable UI: Header, Footer, PropertyCard, ProjectCard,
+│                         #   PriceHistoryChart, SearchBar, ContactForm, StickyContact, ...
+├── pages/                # Home, Properties, Services, Portfolio, About, Contact,
+│                         #   AdminDashboard
+└── vite.config.ts        # Vite config (@ alias, dev server)
+```
+
+## Deployment
+
+Static production build (`npm run build`) — deployed to Netlify as a static site
+(`https://ashvik-construction-mumbai.netlify.app`). Any static host (GitHub Pages,
+Cloudflare Pages) works the same way: serve the `dist/` directory.
+
+## License
+
+All rights reserved — Ashvik Construction.
+
+---
+
+Built by Girish Lade · https://ladestack.in
